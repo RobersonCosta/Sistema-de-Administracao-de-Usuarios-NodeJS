@@ -1,0 +1,96 @@
+extends ../layout
+
+block content
+  .pb-2.mt-2.mb-4.border-bottom
+    h3 Editar Pessoa
+  form(method='POST')  
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='nome') Nome
+      .col-md-7
+        input.form-control(type='text', name='nome', id='nome', placeholder='Nome Completo', autofocus, autocomplete='nome', value=person.nome, required)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='telefone') Telefone
+      .col-md-7
+        input.form-control(type='text', name='telefone', id='telefone', placeholder='Telefone', autofocus, autocomplete='telefone', value=person.telefone, required)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='data_nascimento') Data de Nascimento
+      .col-md-7
+        input.form-control(type='date', name='data_nascimento', id='data_nascimento', autofocus, value=data_nascimento, autocomplete='data_nascimento', required)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='rg') RG
+      .col-md-7
+        input.form-control(type='text', name='rg', id='rg', placeholder='RG', autofocus, autocomplete='rg', value=person.rg, required)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='CPF') CPF
+      .col-md-7
+        input.form-control(type='text', name='cpf', id='cpf', placeholder='CPF', autofocus, autocomplete='cpf', value=person.cpf, required)
+    hr
+    .form-group.row
+      h5.col-md-3.font-weight-bold.text-right Endereço
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='cep') CEP
+      .col-md-7
+        input.form-control(type='text', name='cep', id='cep', placeholder='CEP', autofocus, autocomplete='cep', value=person.endereco.cep, required)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='logradouro') Logradouro
+      .col-md-7
+        input.form-control(type='text', name='logradouro', id='logradouro', placeholder='Logradouro', autofocus, autocomplete='logradouro', value=person.endereco.logradouro, required)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='numero') Número
+      .col-md-7
+        input.form-control(type='text', name='numero', id='numero', placeholder='Número', autofocus, autocomplete='numero', value=person.endereco.numero, required)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='complemento') Complemento
+      .col-md-7
+        input.form-control(type='text', name='complemento', id='complemento', placeholder='Complemento', autofocus, value=person.endereco.complemento, autocomplete='complemento')   
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='bairro') Bairro
+      .col-md-7
+        input.form-control(type='text', name='bairro', id='bairro', placeholder='Bairro', autofocus, value=person.endereco.bairro, autocomplete='bairro')   
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='cidade') Cidade
+      .col-md-7
+        input.form-control(type='text', name='cidade', id='cidade', placeholder='Cidade', autofocus, autocomplete='cidade', value=person.endereco.cidade, required)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='estado') Estado
+      .col-md-7
+        input(type='hidden', id='estado_encontrado', name='estado_encontrado', value=person.endereco.estado)
+        select.col-md-4.col-form-label.text-right(id='estado', name="estado") Estado
+          option(value="") Selecione um Estado
+          option(value="AC") Acre
+          option(value="AL") Alagoas
+          option(value="AP") Amapa			
+          option(value="AM") Amazonas
+          option(value="BA") Bahia
+          option(value="CE") Ceará
+          option(value="DF") Distrito Federal
+          option(value="ES") Espírito Santo
+          option(value="GO") Goiás
+          option(value="MA") Maranhão
+          option(value="MT") Mato Grosso
+          option(value="MS") Mato Grosso do Sul
+          option(value="MG") Minas Gerais
+          option(value="PA") Pará
+          option(value="PB") Paraíba
+          option(value="PR") Paraná
+          option(value="PE") Pernambuco
+          option(value="PI") Piauí
+          option(value="RJ") Rio de Janeiro
+          option(value="RN") Rio Grande do Norte
+          option(value="RS") Rio Grande do Sul
+          option(value="RO") Rondônia
+          option(value="RR") Roraima
+          option(value="SC") Santa Catarina
+          option(value="SP") São Paulo
+          option(value="SE") Sergipe
+          option(value="TO") Tocantins        
+    .form-group.row
+      .offset-md-3.col-md-7.pl-2
+        button.col-md-3.btn.btn-primary(type='submit')
+          i.far.fa-user.fa-sm
+          | Editar
+        //-a.btn.btn-link(href='/forgot') Forgot your password?
+    .form-group
+      .offset-md-3.col-md-7.pl-2
+        hr
