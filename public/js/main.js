@@ -35,4 +35,10 @@ $(document).ready(() => {
   			}
   		});
   });
+  var estado = $("#estado_encontrado").val();
+  $('#estado option').each(function() {
+  if($(this).val() == estado) {
+      $(this).attr('selected', true);
+    }
+  });
 });

@@ -14,12 +14,15 @@ block content
         p
         h6="Endereço:"
         if !person.endereco.complemento
-          p="Logradouro: "+person.endereco.logradouro+", "+person.endereco.numero+" / "+person.endereco.bairro
+          p=person.endereco.logradouro+", "+person.endereco.numero+" / "+person.endereco.bairro
         else
-          p="Logradouro: "+person.endereco.logradouro+", "+person.endereco.numero+" - "+person.endereco.complemento+" / "+person.endereco.bairro
-        p.mt-n3=person.endereco.cidade+" / "+person.endereco.estado
+          p=person.endereco.logradouro+", "+person.endereco.numero+" - "+person.endereco.complemento+" / "+person.endereco.bairro
+        p.mt-n3=person.endereco.cep+" - "+person.endereco.cidade+" / "+person.endereco.estado
         
         p
-          a.btn.btn-danger.mt-3(href='#', role='button') Deletar Pessoa »
+        form(action='/person/delete/'+person._id, method='POST', onsubmit="return confirm('Tem certeza que deseja deletar "+person.nome+"?');")
+          input(type='hidden', name='_csrf', value=_csrf)
+          button.btn.btn-danger.mt-3(href='/person/delete/'+person._id, type='submit') Deletar Pessoa »          
+          a.btn.btn-success.ml-3.mt-3(href='/person/edit/'+person._id, role='button') Editar Pessoa »
   else
-    h3 Não há pessoas cadastradas
+    h4.ml-5 Não há pessoas cadastradas.

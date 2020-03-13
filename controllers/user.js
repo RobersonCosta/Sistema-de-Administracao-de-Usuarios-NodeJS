@@ -18,7 +18,7 @@ exports.getLogin = (req, res) => {
     return res.redirect('/');
   }
   res.render('account/login', {
-    title: 'Login'
+    title: 'Entrar'
   });
 };
 
@@ -28,8 +28,8 @@ exports.getLogin = (req, res) => {
  */
 exports.postLogin = (req, res, next) => {
   const validationErrors = [];
-  if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Please enter a valid email address.' });
-  if (validator.isEmpty(req.body.password)) validationErrors.push({ msg: 'Password cannot be blank.' });
+  if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Insira um email válido.' });
+  if (validator.isEmpty(req.body.password)) validationErrors.push({ msg: 'Senha não pode estar em branco.' });
 
   if (validationErrors.length) {
     req.flash('errors', validationErrors);
@@ -45,7 +45,7 @@ exports.postLogin = (req, res, next) => {
     }
     req.logIn(user, (err) => {
       if (err) { return next(err); }
-      req.flash('success', { msg: 'Success! You are logged in.' });
+      req.flash('success', { msg: 'Login efetuado com sucesso!' });
       res.redirect(req.session.returnTo || '/');
     });
   })(req, res, next);
@@ -58,7 +58,7 @@ exports.postLogin = (req, res, next) => {
 exports.logout = (req, res) => {
   req.logout();
   req.session.destroy((err) => {
-    if (err) console.log('Error : Failed to destroy the session during logout.', err);
+    if (err) console.log('Error : Falha ao finalizara sessão.', err);
     req.user = null;
     res.redirect('/');
   });
@@ -73,7 +73,7 @@ exports.getSignup = (req, res) => {
     return res.redirect('/');
   }
   res.render('account/signup', {
-    title: 'Create Account'
+    title: 'Criar Conta'
   });
 };
 
@@ -83,9 +83,9 @@ exports.getSignup = (req, res) => {
  */
 exports.postSignup = (req, res, next) => {
   const validationErrors = [];
-  if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Please enter a valid email address.' });
-  if (!validator.isLength(req.body.password, { min: 8 })) validationErrors.push({ msg: 'Password must be at least 8 characters long' });
-  if (req.body.password !== req.body.confirmPassword) validationErrors.push({ msg: 'Passwords do not match' });
+  if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Insira um email válido.' });
+  if (!validator.isLength(req.body.password, { min: 8 })) validationErrors.push({ msg: 'Senha precisa de 8 caracteres ou mais.' });
+  if (req.body.password !== req.body.confirmPassword) validationErrors.push({ msg: 'Senhas não batem.' });
 
   if (validationErrors.length) {
     req.flash('errors', validationErrors);
@@ -101,7 +101,7 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email: req.body.email }, (err, existingUser) => {
     if (err) { return next(err); }
     if (existingUser) {
-      req.flash('errors', { msg: 'Account with that email address already exists.' });
+      req.flash('errors', { msg: 'Já existe uma conta com este email.' });
       return res.redirect('/signup');
     }
     user.save((err) => {
@@ -122,7 +122,7 @@ exports.postSignup = (req, res, next) => {
  */
 exports.getAccount = (req, res) => {
   res.render('account/profile', {
-    title: 'Account Management'
+    title: 'Perfil'
   });
 };
 
@@ -132,7 +132,7 @@ exports.getAccount = (req, res) => {
  */
 exports.postUpdateProfile = (req, res, next) => {
   const validationErrors = [];
-  if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Please enter a valid email address.' });
+  if (!validator.isEmail(req.body.email)) validationErrors.push({ msg: 'Insira um email válido.' });
 
   if (validationErrors.length) {
     req.flash('errors', validationErrors);
@@ -151,12 +151,12 @@ exports.postUpdateProfile = (req, res, next) => {
     user.save((err) => {
       if (err) {
         if (err.code === 11000) {
-          req.flash('errors', { msg: 'The email address you have entered is already associated with an account.' });
+          req.flash('errors', { msg: 'Já existe uma conta com este email.' });
           return res.redirect('/account');
         }
         return next(err);
       }
-      req.flash('success', { msg: 'Profile information has been updated.' });
+      req.flash('success', { msg: 'Perfil atualizado.' });
       res.redirect('/account');
     });
   });
@@ -168,8 +168,8 @@ exports.postUpdateProfile = (req, res, next) => {
  */
 exports.postUpdatePassword = (req, res, next) => {
   const validationErrors = [];
-  if (!validator.isLength(req.body.password, { min: 8 })) validationErrors.push({ msg: 'Password must be at least 8 characters long' });
-  if (req.body.password !== req.body.confirmPassword) validationErrors.push({ msg: 'Passwords do not match' });
+  if (!validator.isLength(req.body.password, { min: 8 })) validationErrors.push({ msg: 'Senha precisa de 8 caracteres ou mais.' });
+  if (req.body.password !== req.body.confirmPassword) validationErrors.push({ msg: 'Senhas não batem' });
 
   if (validationErrors.length) {
     req.flash('errors', validationErrors);
@@ -181,7 +181,7 @@ exports.postUpdatePassword = (req, res, next) => {
     user.password = req.body.password;
     user.save((err) => {
       if (err) { return next(err); }
-      req.flash('success', { msg: 'Password has been changed.' });
+      req.flash('success', { msg: 'Senha trocada com sucesso.' });
       res.redirect('/account');
     });
   });
@@ -195,7 +195,7 @@ exports.postDeleteAccount = (req, res, next) => {
   User.deleteOne({ _id: req.user.id }, (err) => {
     if (err) { return next(err); }
     req.logout();
-    req.flash('info', { msg: 'Your account has been deleted.' });
+    req.flash('info', { msg: 'Sua conta foi deletada.' });
     res.redirect('/');
   });
 };
@@ -258,7 +258,7 @@ exports.getReset = (req, res, next) => {
         return res.redirect('/forgot');
       }
       res.render('account/reset', {
-        title: 'Password Reset'
+        title: 'Resetar Senha'
       });
     });
 };
@@ -479,7 +479,7 @@ exports.getForgot = (req, res) => {
     return res.redirect('/');
   }
   res.render('account/forgot', {
-    title: 'Forgot Password'
+    title: 'Esqueci minha Senha'
   });
 };
 

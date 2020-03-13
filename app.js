@@ -18,6 +18,7 @@ const passport = require('passport');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
+const db = require('./config/db');
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
@@ -52,7 +53,7 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(db.mongoURI);
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
@@ -81,7 +82,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   cookie: { maxAge: 1209600000 }, // two weeks in milliseconds
   store: new MongoStore({
-    url: process.env.MONGODB_URI,
+    url: db.mongoURI,
     autoReconnect: true,
   })
 }));
@@ -157,9 +158,12 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
  * Cadastro de Pessoas routes.
  */
 
- app.get('/person/add', personController.getAdd);
- app.post('/person/add', personController.postAdd);
- app.get('/person/list', personController.getPersons);
+ app.get('/person/add', passportConfig.isAuthenticated, personController.getAdd);
+ app.post('/person/add', passportConfig.isAuthenticated, personController.postAdd);
+ app.get('/person/list', passportConfig.isAuthenticated, personController.getPersons);
+ app.get('/person/edit/:id', passportConfig.isAuthenticated, personController.getEdit);
+ app.post('/person/edit/:id', passportConfig.isAuthenticated, personController.postEdit);
+ app.post('/person/delete/:id', passportConfig.isAuthenticated, personController.postDeletePerson);
 
 /**
  * API examples routes.
