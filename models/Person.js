@@ -3,30 +3,41 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 
 const personSchema = new mongoose.Schema({
-  profile: {
-    nome: {
+  nome: {
+    type: String,
+    required: true
+  },
+  telefone: {
+    type: Number,
+    required: true
+  },
+  data_nascimento: {
+    type: Date,
+    required: true
+  },
+  rg: {
+    type: Number,
+    required: true,
+    unique: true
+  },
+  cpf: {
+    type: Number,
+    required: true,
+    unique: true
+  },
+  endereco: {
+    logradouro: {
       type: String,
       required: true
     },
-    telefone: {
+    numero: {
       type: Number,
       required: true
     },
-    data_nascimento: {
-      type: Date,
-      required: true
+    complemento: {
+      type: String,
     },
-    rg: {
-      type: Number,
-      required: true,
-      unique: true
-    },
-    cpf: {
-      type: Number,
-      required: true,
-      unique: true
-    },
-    endereco: {
+    bairro: {
       type: String,
       required: true
     },
@@ -39,7 +50,7 @@ const personSchema = new mongoose.Schema({
       required: true
     },
     cep: {
-      type: String,
+      type: Number,
       required: true
     }
   }

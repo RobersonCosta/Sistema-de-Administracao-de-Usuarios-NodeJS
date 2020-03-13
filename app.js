@@ -158,6 +158,8 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
  */
 
  app.get('/person/add', personController.getAdd);
+ app.post('/person/add', personController.postAdd);
+ app.get('/person/list', personController.getPersons);
 
 /**
  * API examples routes.

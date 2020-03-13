@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  .pb-2.mt-2.mb-4.border-bottom
+    h3 Lista de Pessoas
+  each person in persons
+    .card
+      .card-body
+        h2=person.nome
+        h6="Telefone: "+person.telefone
+        h6="Data de Nascimento: "+person.data_nascimento
+        h6="RG: "+person.rg
+        h6="CPF: "+person.cpf
+        p
+        h6="Endereço:"
+        if !person.endereco.complemento
+          p="Logradouro: "+person.endereco.logradouro+", "+person.endereco.numero+" / "+person.endereco.bairro
+        else
+          p="Logradouro: "+person.endereco.logradouro+", "+person.endereco.numero+" - "+person.endereco.complemento+" / "+person.endereco.bairro
+        p.mt-n3=person.endereco.cidade+" / "+person.endereco.estado
+        
+        p
+          a.btn.btn-danger.mt-3(href='#', role='button') Deletar Pessoa »
+  else
+    h3 Não há pessoas cadastradas

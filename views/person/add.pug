@@ -3,7 +3,8 @@ extends ../layout
 block content
   .pb-2.mt-2.mb-4.border-bottom
     h3 Nova Pessoa
-  form(method='POST')
+  form(method='POST')  
+    input(type='hidden', name='_csrf', value=_csrf)
     .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='nome') Nome
       .col-md-7
@@ -42,7 +43,11 @@ block content
     .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='complemento') Complemento
       .col-md-7
-        input.form-control(type='text', name='complemento', id='complemento', placeholder='Complemento', autofocus, autocomplete='complemento')    
+        input.form-control(type='text', name='complemento', id='complemento', placeholder='Complemento', autofocus, autocomplete='complemento')   
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='bairro') Bairro
+      .col-md-7
+        input.form-control(type='text', name='bairro', id='bairro', placeholder='Bairro', autofocus, autocomplete='bairro')   
     .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='cidade') Cidade
       .col-md-7
@@ -50,7 +55,8 @@ block content
     .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='estado') Estado
       .col-md-7
-        select.col-md-4.col-form-label.text-right(id='estado') Estado
+        select.col-md-4.col-form-label.text-right(id='estado', name="estado") Estado
+          option(value="") Selecione um Estado
           option(value="AC") Acre
           option(value="AL") Alagoas
           option(value="AP") Amapa			
